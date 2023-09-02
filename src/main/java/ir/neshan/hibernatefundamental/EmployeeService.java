@@ -1,6 +1,7 @@
 package ir.neshan.hibernatefundamental;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.*;
 import lombok.AllArgsConstructor;
 import org.hibernate.*;
 import org.hibernate.query.Query;
@@ -36,5 +37,24 @@ public class EmployeeService {
         return results;
     }
 
-    // other methods for retrieving, updating, and deleting employees
+    public List<Employee> getEmployeeByNameNative(String name) {
+        String sql = "SELECT * FROM Employee E WHERE E.name = :employee_name";
+        Query query = (Query) entityManager.createNativeQuery(sql, Employee.class);
+        query.setParameter("employee_name", name);
+        List<Employee> results = query.getResultList();
+        return results;
+    }
+
+    public List<Employee> getEmployeeByNameCriteria(String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("name"), name));
+        Query query = (Query) entityManager.createQuery(criteriaQuery);
+        List<Employee> results = query.getResultList();
+        return results;
+    }
+
+
+
 }
