@@ -1,5 +1,7 @@
-package ir.neshan.hibernatefundamental;
+package ir.neshan.hibernatefundamental.service;
 
+import ir.neshan.hibernatefundamental.model.Employee;
+import ir.neshan.hibernatefundamental.repository.EmployeeRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private EntityManager entityManager;
+
     public Employee saveEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
@@ -54,6 +57,8 @@ public class EmployeeService {
         List<Employee> results = query.getResultList();
         return results;
     }
+
+
 
 
 

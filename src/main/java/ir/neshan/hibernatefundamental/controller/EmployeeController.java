@@ -1,5 +1,8 @@
-package ir.neshan.hibernatefundamental;
+package ir.neshan.hibernatefundamental.controller;
 
+import ir.neshan.hibernatefundamental.model.Employee;
+import ir.neshan.hibernatefundamental.repository.EmployeeRepository;
+import ir.neshan.hibernatefundamental.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,7 @@ import java.util.Optional;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    EmployeeRepository employeeRepository;
 
 
     @PostMapping("/create")
@@ -28,6 +32,12 @@ public class EmployeeController {
     @GetMapping("/name/{name}")
     public List<Employee> getEmployeeByName(@PathVariable String name) {
         return employeeService.getEmployeeByName(name);
+    }
+
+    @DeleteMapping("/delete/dep/{name}")
+    public void deleteAllEmployeeByDepartmentName(@PathVariable String name) {
+        employeeRepository.deleteAllByDepartmentName(name);
+
     }
 
 
